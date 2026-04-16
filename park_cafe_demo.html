@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Cafe — Discover The Art Of Perfect Coffee</title>
+    
+    <!-- Premium Dribbble Assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Exact Dribbble Palette */
+            --bg-dark: #1B120B;
+            --bg-lite: #F5E6DA;
+            --tan: #D3B99C;
+            --accent: #C6A67A;
+            --text-white: #FFFFFF;
+            --text-dark: #1B120B;
+            
+            /* High-End Proportions */
+            --container: 1400px;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-lite);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .serif-type {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- STICKY GLASS HEADER --- */
+        header {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1000;
+            transition: 0.6s var(--ease);
+        }
+
+        header.scrolled {
+            height: 80px;
+            background: rgba(27, 18, 11, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .header-content {
+            max-width: var(--container);
+            width: 100%;
+            height: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            transition: 0.4s;
+        }
+
+        header.scrolled .header-content { border-color: transparent; }
+
+        .logo { font-size: 22px; font-weight: 800; color: var(--text-white); letter-spacing: 1px; }
+
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); }
+        .nav-links a:hover { color: var(--accent); }
+
+        .header-actions { display: flex; align-items: center; gap: 20px; color: var(--text-white); }
+        .btn-sign { font-size: 13px; font-weight: 600; }
+
+        /* --- CINEMATIC PARALLAX HERO --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 850px;
+            background-image: url('Hero.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Parallax effect */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        /* Ambient Noise & Overlay */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(27, 18, 11, 0.75), rgba(27,18,11,0.2));
+            z-index: 1;
+        }
+
+        .hero-container {
+            max-width: var(--container);
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .hero-text {
+            max-width: 750px;
+            color: var(--text-white);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadUp 1.2s var(--ease) forwards 0.2s;
+        }
+
+        @keyframes fadUp { to { transform: translateY(0); opacity: 1; } }
+
+        .hero-text h1 {
+            font-size: clamp(54px, 7vw, 92px); /* Larger typography */
+            line-height: 1.05;
+            margin-bottom: 30px;
+            letter-spacing: -3px;
+        }
+
+        .hero-text p {
+            font-size: 18px; /* Larger body text */
+            line-height: 1.8;
+            opacity: 0.7;
+            margin-bottom: 50px;
+            max-width: 520px;
+        }
+
+        .hero-btns { display: flex; gap: 20px; }
+
+        .btn {
+            padding: 18px 45px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.4s var(--ease);
+            cursor: pointer;
+        }
+
+        .btn-lite { background: var(--text-white); color: var(--text-dark); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.4); color: var(--text-white); }
+        .btn:hover { background: var(--accent); color: white; transform: translateY(-3px) scale(1.02); }
+
+        .hero-stats {
+            margin-top: 100px;
+            display: flex;
+            gap: 60px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 40px;
+        }
+
+        .stat h4 { font-size: 36px; margin-bottom: 5px; }
+        .stat p { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; }
+
+        /* --- SECTION REVEALS --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s var(--ease); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- GALLERY SECTIONS REFINED --- */
+        .section-split {
+            padding: 160px 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .split-container {
+            max-width: var(--container);
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 140px;
+        }
+
+        .split-visual { position: relative; perspective: 1000px; }
+
+        .tilted-frame {
+            position: relative;
+            background: white;
+            padding: 12px; /* Smaller padding */
+            box-shadow: 0 40px 100px rgba(0,0,0,0.12);
+            transform: rotate(-4deg);
+            z-index: 10;
+            transition: 0.1s linear; /* Smooth mouse tilt */
+            width: 380px; /* Smaller image frames */
+            height: auto;
+        }
+
+        .tilted-frame::after {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px;
+            width: 100%; height: 100%;
+            border: 1px solid var(--accent);
+            z-index: -1;
+            transform: rotate(8deg);
+        }
+
+        .tilted-frame img { width: 100%; height: 480px; object-fit: cover; }
+
+        .split-text h2 { 
+            font-size: clamp(48px, 6vw, 78px); /* Larger typography */
+            margin-bottom: 30px; 
+            line-height: 1.1;
+        }
+        .split-text p { 
+            font-size: 19px; /* Larger body text */
+            opacity: 0.6; line-height: 1.9; 
+            margin-bottom: 45px; 
+            max-width: 500px;
+        }
+
+        .btn-square {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--text-dark);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        /* --- BEST SELLER --- */
+        .best-seller {
+            padding: 160px 40px;
+            background: var(--bg-lite);
+            text-align: center;
+        }
+
+        .best-seller h2 { font-size: 64px; margin-bottom: 25px; }
+        .best-seller p { font-size: 18px; opacity: 0.5; margin-bottom: 80px; }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .tab { font-size: 14px; font-weight: 700; opacity: 0.3; cursor: pointer; transition: 0.3s; }
+        .tab.active { opacity: 1; border-bottom: 2px solid var(--text-dark); padding-bottom: 15px; }
+
+        .card-grid {
+            max-width: var(--container);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .menu-card {
+            background: var(--tan);
+            padding: 25px;
+            border-radius: 12px;
+            transition: 0.5s var(--ease);
+        }
+
+        .menu-card:hover { transform: translateY(-15px) rotate(1deg); }
+
+        .card-img {
+            width: 100%;
+            height: 300px;
+            background: white;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 1s var(--ease); }
+        .menu-card:hover .card-img img { transform: scale(1.1); }
+
+        .menu-card h3 { font-size: 28px; margin-bottom: 30px; }
+
+        .btn-order-alt {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.1);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn-order-alt:hover { background: var(--text-dark); color: white; }
+
+        /* --- TESTIMONIAL --- */
+        .testimonial-section {
+            padding: 180px 20px;
+            text-align: center;
+            background: #EFE6DA;
+        }
+
+        .testimonial-section h2 { font-size: clamp(42px, 5vw, 64px); margin-bottom: 120px; }
+
+        .testi-box {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            color: white;
+            padding: 100px 80px;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.2);
+        }
+
+        .testi-vatar {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 8px solid #EFE6DA;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .testi-vatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .testi-box q { font-size: 24px; line-height: 1.8; opacity: 0.8; margin-bottom: 40px; display: block; font-style: italic; }
+        .testi-stars { color: var(--accent); margin-bottom: 30px; font-size: 20px; }
+        .testi-name { font-size: 22px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* --- FOOTER COMPACT & PRO --- */
+        footer {
+            background: var(--bg-dark);
+            color: white;
+            padding: 70px 40px 30px; /* Smaller padding */
+        }
+
+        .footer-grid {
+            max-width: var(--container);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr;
+            gap: 100px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding-bottom: 50px;
+        }
+
+        .footer-brand h2 { font-size: 42px; margin-bottom: 15px; letter-spacing: -1px; }
+        .footer-brand p { opacity: 0.4; line-height: 1.8; max-width: 320px; font-size: 14px; }
+
+        .footer-contact h5 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 25px; }
+        .footer-contact p { margin-bottom: 10px; font-size: 14px; opacity: 0.7; }
+
+        .footer-pic { display: flex; justify-content: flex-end; }
+        .footer-pic img { width: 240px; height: 140px; object-fit: cover; border-radius: 6px; opacity: 0.6; }
+
+        .footer-tiny {
+            padding: 25px 0 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            opacity: 0.25;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* --- MOBILE REFINEMENTS --- */
+        @media (max-width: 1100px) {
+            .hero { background-attachment: scroll; background-position: center; text-align: center; height: 80vh; }
+            .hero::before { width: 100%; background: rgba(27, 18, 11, 0.6); }
+            .hero-container { justify-content: center; }
+            .hero-stats { justify-content: center; gap: 30px; }
+            .hero-text h1 { font-size: 54px; }
+            .section-split { padding: 100px 20px; }
+            .split-container { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+            .tilted-frame { width: 100%; max-width: 340px; margin: 0 auto; }
+            .split-text h2 { font-size: 42px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+            .footer-pic { display: none; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="header-content">
+            <a href="#" class="logo">Park Cafe</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#about">About</a>
+                <a href="#community">Community</a>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="btn-sign">Sign In</a>
+                <span>🔎</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>Discover The Art Of Perfect Coffee</h1>
+                <p>Experience the rich and bold flavors of Manhattan’s finest artisanal blends, crafted to awaken your senses and start your day with soul.</p>
+                <div class="hero-btns">
+                    <a href="#menu" class="btn btn-lite">Order Now ➔</a>
+                    <a href="#" class="btn btn-outline">Explore More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat"><h4>50+</h4><p>Items of Coffee</p></div>
+                    <div class="stat"><h4>20+</h4><p>Order Running</p></div>
+                    <div class="stat"><h4>2k+</h4><p>Happy Customers</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-split reveal">
+        <div class="split-container">
+            <div class="split-visual">
+                <div class="tilted-frame tilt-3d">
+                    <img src="park_cafe_baklava_treats_1776366032141.png" alt="Baklava Gallery">
+                </div>
+            </div>
+            <div class="split-text">
+                <h2>Coffee Heaven</h2>
+                <p>Nested at 153 Manhattan Ave, we are the neighbourhood’s hidden gem. We believe in spectacular service and artisanal quality for everyone.</p>
+                <a href="#" class="btn-square">Our Story ➔</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-split reveal" style="padding-top: 0;">
+        <div class="split-container" style="grid-template-columns: 1fr 1.2fr;">
+            <div class="split-text">
+                <h2>The Vibe.</h2>
+                <p>Genuine people, genuine flavors. Park Cafe is more than a stop—it’s a Manhattan heritage retreat for kind souls.</p>
+                <a href="#" class="btn-square">Experience It ➔</a>
+            </div>
+            <div class="split-visual">
+                <div class="tilted-frame tilt-3d" style="transform: rotate(4deg);">
+                    <img src="park_cafe_interior_vibe_1776366471563.png" alt="Cafe Interior">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="best-seller reveal">
+        <h2>Best Selling Items</h2>
+        <p>Expertly curated flavors that Manhattan loves.</p>
+        <div class="menu-tabs">
+            <div class="tab active">All</div>
+            <div class="tab">Coffee</div>
+            <div class="tab">Espresso</div>
+            <div class="tab">Treats</div>
+        </div>
+        <div class="card-grid">
+            <div class="menu-card">
+                <div class="card-img"><img src="park_cafe_chai_hero_1776366011311.png"></div>
+                <h3>Park Chai</h3>
+                <button class="btn-order-alt">Quick Order</button>
+            </div>
+            <div class="menu-card">
+                <div class="card-img"><img src="park_cafe_smoothie_detail_1776366452785.png"></div>
+                <h3>Sweety Smoothie</h3>
+                <button class="btn-order-alt">Quick Order</button>
+            </div>
+            <div class="menu-card">
+                <div class="card-img"><img src="park_cafe_baklava_treats_1776366032141.png"></div>
+                <h3>Pistachio Baklava</h3>
+                <button class="btn-order-alt">Quick Order</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="community" class="testimonial-section reveal">
+        <h2>What Our Customer Says</h2>
+        <div class="testi-box">
+            <div class="testi-vatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"></div>
+            <q>The chai was so incredible, and the owners were the kindest. If you want a good vibe and even better food, this is your place. Genuine Manhattan soul.</q>
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-name">Emma Scarborugh</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>Park Cafe</h2>
+                <p>Authentic Manhattan heritage. Enjoy better and better quality coffee with Park Cafe.</p>
+            </div>
+            <div class="footer-contact">
+                <h5>Reach Out</h5>
+                <p>📧 Caffeine@Gmail.Com</p>
+                <p>📞 +1 516-749-0697</p>
+                <p>📍 153 Manhattan Ave, NYC</p>
+            </div>
+            <div class="footer-pic">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80">
+            </div>
+        </div>
+        <div class="footer-tiny">
+            <span>Copyright 2026 Park Cafe</span>
+            <span>Design by S-Designs Manhattan</span>
+        </div>
+    </footer>
+
+    <script>
+        // 1. STICKY GLASS HEADER
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. 3D TILT EFFECT FOR GALLERY
+        const cards = document.querySelectorAll('.tilt-3d');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 8; // Adjust for intensity
+                const rotateY = (centerX - x) / 8;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+                setTimeout(() => {
+                    // Restore original rotation after a moment
+                    if (card.parentElement.parentElement.style.paddingTop === '0px') {
+                        card.style.transform = `rotate(4deg)`;
+                    } else {
+                        card.style.transform = `rotate(-4deg)`;
+                    }
+                }, 400);
+            });
+        });
+
+        // 3. SCROLL REVEAL OBSERVER
+        const revealOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
