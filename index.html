@@ -43,6 +43,8 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        body.menu-open { overflow: hidden; }
+
         h1, h2, h3, h4, .serif-type {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
@@ -66,8 +68,8 @@
 
         header.scrolled {
             height: 80px;
-            background: rgba(27, 18, 11, 0.9);
-            backdrop-filter: blur(25px);
+            background: rgba(27, 18, 11, 0.85); 
+            backdrop-filter: blur(35px); 
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -94,30 +96,108 @@
         .header-actions { display: flex; align-items: center; gap: 30px; color: var(--text-white); }
         .btn-sign { font-size: 13px; font-weight: 600; }
 
-        /* --- MOBILE MENU --- */
-        .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2000; }
-        .hamburger span { display: block; width: 25px; height: 2px; background: #fff; transition: 0.3s; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+        /* --- HAMBURGER MORPHING X --- */
+        .hamburger-box { 
+            display: none; 
+            width: 48px; 
+            height: 48px; 
+            background: rgba(255,255,255,0.08); 
+            backdrop-filter: blur(15px); 
+            border-radius: 10px; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            z-index: 2000; 
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
+        .hamburger { 
+            width: 22px; 
+            height: 16px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            position: relative;
+        }
+        
+        .hamburger span { 
+            display: block; 
+            height: 3px; 
+            width: 100%;
+            background: #fff; 
+            border-radius: 10px;
+            transition: 0.4s var(--ease); 
+        }
+
+        /* X Morphing Logic */
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* --- OVERLAY BACKDROP --- */
+        .nav-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.5s var(--ease);
+            z-index: 1200;
+        }
+
+        .nav-overlay.active { opacity: 1; visibility: visible; }
+
+        /* --- OPTIMIZED SIDE DRAWER (SCROLLABLE & COMPACT) --- */
         .mobile-nav {
             position: fixed;
-            top: 0; right: -100%;
-            width: 80%; height: 100vh;
-            background: rgba(27, 18, 11, 0.98);
-            backdrop-filter: blur(30px);
+            top: 0; left: -100%;
+            width: min(85%, 360px);
+            height: 100vh;
+            background: var(--bg-dark);
             z-index: 1500;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
+            padding: 80px 40px; /* Reduced padding */
             transition: 0.6s var(--ease);
+            overflow-y: auto; /* Scrollable logic */
+            -webkit-overflow-scrolling: touch;
         }
 
-        .mobile-nav.active { right: 0; }
-        .mobile-nav a { font-size: 24px; color: #fff; font-family: 'Playfair Display', serif; }
+        .mobile-nav.active { left: 0; }
+
+        .mobile-nav-links { display: flex; flex-direction: column; gap: 25px; margin-top: 40px; }
+        .mobile-nav-links a {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(22px, 6vw, 28px); /* Delicate Scaling */
+            color: #fff;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: 0.8s var(--ease);
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .mobile-nav.active a { opacity: 1; transform: translateX(0); }
+        .mobile-nav.active a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav.active a:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav.active a:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav.active a:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-nav.active a:nth-child(5) { transition-delay: 0.5s; }
+
+        .mobile-nav-links a::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 0; bottom: -6px; /* Reduced space */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.4;
+        }
 
         /* --- HERO (DARK) --- */
         .hero {
@@ -146,20 +226,25 @@
         }
 
         .hero-container { max-width: var(--container); width: 100%; z-index: 10; display: flex; justify-content: flex-start; }
-        .hero-text { max-width: 750px; color: var(--text-white); transform: translateY(20px); opacity: 0; animation: fadUp 1.2s var(--ease) forwards 0.2s; }
+        .hero-text { max-width: 800px; color: var(--text-white); transform: translateY(20px); opacity: 0; animation: fadUp 1.2s var(--ease) forwards 0.2s; }
         @keyframes fadUp { to { transform: translateY(0); opacity: 1; } }
 
-        .hero-text h1 { font-size: clamp(38px, 6.5vw, 92px); line-height: 1.05; margin-bottom: 25px; letter-spacing: -2px; }
-        .hero-text p { font-size: 17px; line-height: 1.7; opacity: 0.7; margin-bottom: 45px; max-width: 520px; }
+        .hero-text h1 { 
+            font-size: clamp(42px, 7.5vw, 92px); 
+            line-height: 1.05; 
+            margin-bottom: 25px; 
+            letter-spacing: -3px; 
+        }
+        .hero-text p { font-size: 18px; line-height: 1.8; opacity: 0.75; margin-bottom: 50px; max-width: 550px; }
 
         .hero-btns { display: flex; gap: 20px; }
-        .btn { padding: 18px 45px; border-radius: 4px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; transition: 0.4s var(--ease); cursor: pointer; white-space: nowrap; }
+        .btn { padding: 20px 50px; border-radius: 4px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; transition: 0.4s var(--ease); cursor: pointer; white-space: nowrap; }
         .btn-lite { background: var(--text-white); color: var(--text-dark); }
         .btn-outline { border: 1px solid rgba(255,255,255,0.4); color: var(--text-white); }
         .btn:hover { background: var(--accent); color: white; transform: translateY(-3px) scale(1.02); }
 
         .hero-stats { margin-top: 80px; display: flex; gap: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; }
-        .stat h4 { font-size: 32px; margin-bottom: 5px; }
+        .stat h4 { font-size: 36px; margin-bottom: 5px; }
         .stat p { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.4; }
 
         /* --- SECTION REVEALS --- */
@@ -211,11 +296,11 @@
         .map-section iframe { width: 100%; height: 100%; border: none; }
         .map-overlay { position: absolute; top: 40px; left: 40px; background: var(--bg-dark); color: #fff; padding: 35px; border-radius: 4px; max-width: 320px; box-shadow: 0 40px 80px rgba(0,0,0,0.4); z-index: 100; }
 
-        /* --- COMPACT UNIQUE FOOTER (DARK) --- */
+        /* --- ULTRA-MINIMALIST FOOTER (DARK BLOCK) --- */
         footer {
             background: var(--bg-dark);
             color: white;
-            padding: 85px 40px 50px;
+            padding: 60px 40px 40px;
             position: relative;
             overflow: hidden;
         }
@@ -235,78 +320,92 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-            gap: 60px;
+            gap: 40px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 65px;
+            padding-bottom: 40px;
         }
 
         .footer-about h2 { 
-            font-size: 44px; 
-            margin-bottom: 25px; 
-            letter-spacing: -2px; 
+            font-size: 32px;
+            margin-bottom: 15px; 
+            letter-spacing: -1px; 
             background: linear-gradient(to bottom, #fff, #999);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
-        .footer-about p { opacity: 0.35; line-height: 1.9; font-size: 14px; max-width: 400px; }
+        .footer-about p { opacity: 0.3; line-height: 1.8; font-size: 13px; max-width: 380px; }
 
-        .footer-col h5 { text-transform: uppercase; letter-spacing: 1.5px; font-size: 11px; color: var(--accent); margin-bottom: 28px; }
-        .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul li a { opacity: 0.5; font-size: 14px; transition: 0.4s var(--ease); }
+        .footer-col h5 { text-transform: uppercase; letter-spacing: 2px; font-size: 9px; color: var(--accent); margin-bottom: 20px; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { opacity: 0.4; font-size: 13px; transition: 0.3s; }
         .footer-col ul li a:hover { opacity: 1; color: var(--accent); }
 
         .footer-signature {
             max-width: var(--container);
-            margin: 45px auto 0;
+            margin: 30px auto 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .sig-text { font-size: 10px; opacity: 0.2; text-transform: uppercase; letter-spacing: 2px; }
-        .social-row { display: flex; gap: 18px; opacity: 0.4; }
+        .sig-text { font-size: 9px; opacity: 0.15; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* --- MOBILE REFINEMENTS (PRIORITY PRECISION) --- */
+        /* --- MOBILE REFINEMENTS --- */
         @media (max-width: 1100px) {
             header { height: 80px; padding: 0 25px; }
             header.scrolled { height: 65px; }
             .header-content { height: 50px; padding: 0 15px; }
-            .nav-links, .header-actions span { display: none; }
-            .hamburger { display: flex; }
+            .nav-links, .btn-sign { display: none; } 
             .logo { font-size: 18px; }
 
-            .hero { padding: 100px 25px 50px; background-attachment: scroll; text-align: center; }
+            .hamburger-box { display: flex; }
+
+            /* ZERO OVERLAP ENGINE (DISPLAY BLOCK) */
+            .hero { 
+                display: block; 
+                padding: 180px 25px 60px; 
+                height: auto; 
+                min-height: 100vh;
+                background-attachment: scroll; 
+                text-align: center; 
+            }
             .hero-container { justify-content: center; }
-            .hero-text h1 { font-size: clamp(32px, 8vw, 64px); line-height: 1.1; margin-bottom: 20px; }
-            .hero-text p { font-size: 16px; margin-bottom: 35px; }
+            
+            .hero-text { margin: 0 auto; max-width: 100%; }
+            .hero-text h1 { 
+                font-size: clamp(48px, 12vw, 78px); 
+                line-height: 1.1; 
+                margin-bottom: 25px; 
+            }
+            .hero-text p { font-size: 17px; margin-bottom: 35px; line-height: 1.8; margin-left: auto; margin-right: auto; }
             .hero-stats { justify-content: center; gap: 30px; margin-top: 40px; }
 
             .section-split, .craft-section, .full-menu, .events-section, .wall-of-love, .faq-section { padding: 80px 25px; }
-            .split-container, .craft-container, .menu-category-grid, .event-card-container, .love-grid, .footer-main { grid-template-columns: 1fr; gap: 50px; text-align: center; }
-            .tilted-frame { width: 100%; max-width: 320px; margin: 0 auto; }
+            .split-container, .craft-container, .menu-category-grid, .event-card-container, .love-grid, .footer-main { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .tilted-frame { width: 100%; max-width: 280px; margin: 0 auto; }
             .map-overlay { position: relative; top: 0; left: 0; max-width: 100%; border-radius: 0; box-shadow: none; padding: 30px; }
-            .footer-signature { flex-direction: column; gap: 20px; }
-            .footer-about h2 { font-size: 36px; }
+            .footer-signature { flex-direction: column; gap: 20px; text-align: center; }
             .footer-about p { margin: 0 auto; }
         }
 
         @media (max-width: 500px) {
             header { height: 65px; }
-            header.scrolled { height: 60px; }
-            .header-content { height: 44px; }
+            header.scrolled { height: 62px; }
             .logo { font-size: 16px; }
-            .hero { padding-top: 120px; }
+            .hero { padding-top: 180px; }
             
+            .hero-text h1 { font-size: 44px; letter-spacing: -2px; }
+
             .hero-btns { flex-direction: column; align-items: center; width: 100%; }
             .btn { width: 100%; justify-content: center; }
             .btn-outline { margin-left: 0; margin-top: 15px; }
-            .hero-stats { flex-wrap: wrap; gap: 25px; }
-            .stat { width: 100%; }
         }
     </style>
 </head>
 <body>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <header id="main-header">
         <div class="header-content">
@@ -321,18 +420,26 @@
             </nav>
             <div class="header-actions">
                 <a href="#" class="btn-sign">Sign In</a>
-                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+                <div class="hamburger-box" id="hamburger-box">
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <div class="mobile-nav" id="mobile-nav">
-        <a href="#home" onclick="toggleMenu()">Home</a>
-        <a href="#heritage" onclick="toggleMenu()">The Story</a>
-        <a href="#menu" onclick="toggleMenu()">Menu</a>
-        <a href="#events" onclick="toggleMenu()">Events</a>
-        <a href="#reviews" onclick="toggleMenu()">Love</a>
-        <a href="#faq" onclick="toggleMenu()">FAQ</a>
+        <div class="mobile-nav-links">
+            <a href="#home" data-label="Sanctuary Home" onclick="toggleMenu()">Home</a>
+            <a href="#heritage" data-label="Our Manhattan Story" onclick="toggleMenu()">The Story</a>
+            <a href="#menu" data-label="Artisanal Menu" onclick="toggleMenu()">Menu</a>
+            <a href="#events" data-label="What's Happening" onclick="toggleMenu()">Events</a>
+            <a href="#reviews" data-label="Customer Love" onclick="toggleMenu()">Love</a>
+            <a href="#faq" data-label="Sanctuary Help" onclick="toggleMenu()">FAQ</a>
+        </div>
     </div>
 
     <!-- 1. HERO (DARK BLOCK) -->
@@ -465,7 +572,7 @@
         </div>
     </section>
 
-    <!-- 9. AWESOME UNIQUE FOOTER (DARK BLOCK) -->
+    <!-- 9. ULTRA-MINIMALIST FOOTER (DARK BLOCK) -->
     <footer>
         <div class="footer-main">
             <div class="footer-about">
@@ -512,11 +619,22 @@
             else header.classList.remove('scrolled');
         });
 
-        // MOBILE MENU
+        // MOBILE MENU NAVIGATION
+        const hamburgerBox = document.getElementById('hamburger-box');
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobile-nav');
-        function toggleMenu() { hamburger.classList.toggle('active'); mobileNav.classList.toggle('active'); }
-        hamburger.onclick = toggleMenu;
+        const overlay = document.getElementById('nav-overlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        }
+
+        hamburgerBox.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
 
         // 3D TILT
         const cards = document.querySelectorAll('.tilt-3d');
