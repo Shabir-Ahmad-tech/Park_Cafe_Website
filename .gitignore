@@ -1,0 +1,13 @@
+# System Files
+.DS_Store
+Thumbs.db
+
+# Dev Files
+.gemini/
+*.log
+node_modules/
+dist/
+.env
+
+# Project specific
+assets/**/*.tmp
