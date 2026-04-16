@@ -171,7 +171,7 @@
         .mobile-nav-links { display: flex; flex-direction: column; gap: 25px; margin-top: 40px; }
         .mobile-nav-links a {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(22px, 6vw, 28px); /* Delicate Scaling */
+            font-size: clamp(32px, 8vw, 44px); /* Increased by ~15px */
             color: #fff;
             opacity: 0;
             transform: translateX(-40px);
@@ -289,7 +289,11 @@
         .faq-section { padding: 140px 40px; background: var(--bg-dark); color: #fff; display: flex; justify-content: center; }
         .faq-container { max-width: 800px; width: 100%; }
         .faq-container h2 { text-align: center; font-size: 42px; margin-bottom: 50px; color: var(--accent); }
-        .faq-header { padding: 22px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 17px; }
+        .faq-header { padding: 22px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .faq-header span { transition: 0.4s var(--ease); font-size: 12px; opacity: 0.4; }
+        .faq-content { max-height: 0; overflow: hidden; opacity: 0; transition: 0.6s var(--ease); }
+        .faq-item.active .faq-content { max-height: 400px; padding: 20px 0; opacity: 1; }
+        .faq-item.active .faq-header span { transform: rotate(180deg); opacity: 1; color: var(--accent); }
 
         /* --- HUB/MAP (LIGHT) --- */
         .map-section { width: 100%; height: 500px; position: relative; overflow: hidden; background: #F5EAE0; }
@@ -300,7 +304,7 @@
         footer {
             background: var(--bg-dark);
             color: white;
-            padding: 60px 40px 40px;
+            padding: 40px 40px 30px; /* Slimmed further */
             position: relative;
             overflow: hidden;
         }
@@ -322,12 +326,12 @@
             grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
             gap: 40px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 40px;
+            padding-bottom: 30px; /* Slimmed */
         }
 
         .footer-about h2 { 
-            font-size: 32px;
-            margin-bottom: 15px; 
+            font-size: 26px; /* Ultra-slim logo */
+            margin-bottom: 12px; 
             letter-spacing: -1px; 
             background: linear-gradient(to bottom, #fff, #999);
             -webkit-background-clip: text;
@@ -357,7 +361,7 @@
             header.scrolled { height: 65px; }
             .header-content { height: 50px; padding: 0 15px; }
             .nav-links, .btn-sign { display: none; } 
-            .logo { font-size: 18px; }
+            .logo { font-size: 18px; color: #FFFFFF !important; opacity: 1 !important; }
 
             .hamburger-box { display: flex; }
 
