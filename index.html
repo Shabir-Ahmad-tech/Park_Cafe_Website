@@ -23,17 +23,6 @@
             /* High-End Proportions */
             --container: 1400px;
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
-
-            /* Premium Shadow Tokens ($100k+ Aesthetic) */
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.03), 0 1px 4px rgba(0,0,0,0.02);
-            --shadow-md: 0 12px 30px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03);
-            --shadow-lg: 0 30px 60px rgba(0,0,0,0.12), 0 5px 15px rgba(0,0,0,0.05);
-            --shadow-xl: 0 50px 100px rgba(0,0,0,0.18), 0 10px 30px rgba(0,0,0,0.08);
-            --glass-white: rgba(255, 255, 255, 0.75);
-            --glass-dark: rgba(27, 18, 11, 0.85);
-            --glass-border-white: 1px solid rgba(255, 255, 255, 0.4);
-            --glass-border-dark: 1px solid rgba(255, 255, 255, 0.08);
-            --rim-light: inset 0 1px 1px rgba(255,255,255,0.1);
         }
 
         * {
@@ -79,11 +68,9 @@
 
         header.scrolled {
             height: 80px;
-            background: var(--glass-dark); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: var(--glass-border-dark);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(27, 18, 11, 0.85); 
+            backdrop-filter: blur(35px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .header-content {
@@ -252,11 +239,10 @@
         .hero-text p { font-size: 18px; line-height: 1.8; opacity: 0.75; margin-bottom: 50px; max-width: 550px; }
 
         .hero-btns { display: flex; gap: 20px; }
-        .btn { padding: 20px 50px; border-radius: 4px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; transition: 0.4s var(--ease); cursor: pointer; white-space: nowrap; position: relative; overflow: hidden; }
-        .btn-lite { background: var(--text-white); color: var(--text-dark); box-shadow: var(--shadow-sm); }
+        .btn { padding: 20px 50px; border-radius: 4px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; transition: 0.4s var(--ease); cursor: pointer; white-space: nowrap; }
+        .btn-lite { background: var(--text-white); color: var(--text-dark); }
         .btn-outline { border: 1px solid rgba(255,255,255,0.4); color: var(--text-white); }
-        .btn:hover { background: var(--accent); color: white; transform: translateY(-3px); box-shadow: var(--shadow-md); }
-        .btn:active { transform: translateY(-1px); }
+        .btn:hover { background: var(--accent); color: white; transform: translateY(-3px) scale(1.02); }
 
         .hero-stats { margin-top: 80px; display: flex; gap: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; }
         .stat h4 { font-size: 36px; margin-bottom: 5px; }
@@ -270,8 +256,8 @@
         .heritage-section { padding: 140px 40px; background: var(--bg-lite); display: flex; justify-content: center; }
         .split-container { max-width: var(--container); width: 100%; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 100px; }
         .split-visual { position: relative; perspective: 1000px; }
-        .tilted-frame { position: relative; background: white; padding: 12px; box-shadow: var(--shadow-xl); transform: rotate(-4deg); z-index: 10; width: 380px; transition: 0.6s var(--ease); border: 1px solid rgba(0,0,0,0.02); }
-        .tilted-frame img { width: 100%; height: 480px; object-fit: cover; filter: contrast(1.02); }
+        .tilted-frame { position: relative; background: white; padding: 12px; box-shadow: 0 40px 100px rgba(0,0,0,0.12); transform: rotate(-4deg); z-index: 10; width: 380px; transition: 0.1s linear; }
+        .tilted-frame img { width: 100%; height: 480px; object-fit: cover; }
         .split-text h2 { font-size: clamp(42px, 5.5vw, 78px); margin-bottom: 25px; line-height: 1.1; }
         .split-text p { font-size: 18px; opacity: 0.6; line-height: 1.8; margin-bottom: 35px; max-width: 500px; }
 
@@ -282,137 +268,23 @@
         .craft-text p { opacity: 0.7; line-height: 1.9; margin-bottom: 35px; }
 
         /* --- SPECIALTY MENU (LIGHT) --- */
-        .full-menu { padding: 140px 40px; background: #EEE3D9; text-align: center; }
-        .menu-category-grid { max-width: var(--container); margin: 70px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; }
-        
-        .category-card { 
-            background: var(--glass-white); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 60px 40px; 
-            border-radius: 4px; 
-            box-shadow: var(--shadow-md); 
-            text-align: left; 
-            transition: 0.8s var(--ease);
-            border: var(--glass-border-white);
-            border-top: 4px solid var(--accent);
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: attr(data-num);
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            font-family: 'Playfair Display', serif;
-            font-size: 160px;
-            font-weight: 800;
-            color: var(--text-dark);
-            opacity: 0.02;
-            z-index: -1;
-            line-height: 1;
-            transition: 0.8s var(--ease);
-        }
-
-        .category-card:hover { transform: translateY(-12px); box-shadow: var(--shadow-xl); border-color: rgba(198, 166, 122, 0.4); }
-        .category-card:hover::before { transform: translate(-10px, 10px) scale(1.05); color: var(--accent); opacity: 0.05; }
-
-        .category-card h4 { 
-            font-family: 'Playfair Display', serif;
-            font-size: 34px; 
-            color: var(--text-dark); 
-            margin-bottom: 5px; 
-            letter-spacing: -0.5px;
-            font-weight: 700;
-        }
-
-        .card-subtitle {
-            display: block;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin-bottom: 45px;
-            font-weight: 700;
-        }
-
-        .card-subtitle::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background: var(--accent);
-            margin-top: 15px;
-            opacity: 0.5;
-        }
-
-        .menu-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 30px; 
-            padding-bottom: 20px;
-            border-bottom: 1px dashed rgba(0,0,0,0.08);
-            transition: 0.4s var(--ease);
-            position: relative;
-        }
-        .menu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-        .menu-item::after {
-            content: '';
-            position: absolute;
-            left: -20px;
-            top: 50%;
-            transform: translateY(-50%) scale(0);
-            width: 5px;
-            height: 5px;
-            background: var(--accent);
-            border-radius: 50%;
-            transition: 0.4s var(--ease);
-            opacity: 0;
-        }
-
-        .menu-item:hover { transform: translateX(18px); border-bottom-color: rgba(198, 166, 122, 0.3); }
-        .menu-item:hover::after { transform: translateY(-50%) scale(1); opacity: 1; left: -15px; }
-
-        .item-info h5 { font-size: 16px; margin-bottom: 6px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.2px; }
-        .item-info p { font-size: 13px; opacity: 0.5; font-weight: 400; font-family: 'Playfair Display', serif; font-style: italic; letter-spacing: 0.5px; }
-        .item-price { font-weight: 700; color: var(--accent); font-size: 15px; margin-left: 20px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 1px; }
+        .full-menu { padding: 140px 40px; background: #F5EAE0; text-align: center; }
+        .menu-category-grid { max-width: var(--container); margin: 60px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+        .category-column h4 { font-size: 28px; color: var(--text-dark); margin-bottom: 35px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 8px; }
+        .menu-item { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; text-align: left; }
+        .item-price { font-weight: 800; color: var(--accent); font-size: 15px; margin-left: 20px; }
 
         /* --- EVENTS (DARK) --- */
         .events-section { padding: 140px 40px; background: var(--bg-dark); color: #fff; text-align: center; }
         .event-card-container { max-width: var(--container); margin: 60px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .event-card { 
-            background: rgba(255,255,255,0.03); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: var(--glass-border-dark); 
-            box-shadow: var(--rim-light); 
-            padding: 35px; 
-            border-radius: 4px; 
-            text-align: left; 
-            transition: 0.6s var(--ease); 
-        }
-        .event-card:hover { background: rgba(255,255,255,0.06); transform: translateY(-10px); box-shadow: var(--shadow-lg), var(--rim-light); border-color: rgba(255,255,255,0.2); }
+        .event-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 35px; border-radius: 4px; text-align: left; transition: 0.4s; }
+        .event-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
 
         /* --- WALL OF LOVE (LIGHT) --- */
         .wall-of-love { padding: 140px 40px; background: var(--bg-lite); text-align: center; }
         .wall-of-love h2 { font-size: 52px; margin-bottom: 70px; }
         .love-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: var(--container); margin: 0 auto; }
-        .love-card { 
-            background: var(--glass-white); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 35px; 
-            border-radius: 6px; 
-            text-align: left; 
-            box-shadow: var(--shadow-md); 
-            transition: 0.6s var(--ease); 
-            border: var(--glass-border-white); 
-        }
-        .love-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+        .love-card { background: white; padding: 35px; border-radius: 6px; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.05); transition: 0.4s; }
 
         /* --- FAQ (DARK) --- */
         .faq-section { padding: 140px 40px; background: var(--bg-dark); color: #fff; display: flex; justify-content: center; }
@@ -427,21 +299,7 @@
         /* --- HUB/MAP (LIGHT) --- */
         .map-section { width: 100%; height: 500px; position: relative; overflow: hidden; background: #F5EAE0; }
         .map-section iframe { width: 100%; height: 100%; border: none; }
-        .map-overlay { 
-            position: absolute; 
-            top: 40px; 
-            left: 40px; 
-            background: var(--glass-dark); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            color: #fff; 
-            padding: 35px; 
-            border-radius: 4px; 
-            max-width: 320px; 
-            box-shadow: var(--shadow-xl); 
-            z-index: 100; 
-            border: var(--glass-border-dark); 
-        }
+        .map-overlay { position: absolute; top: 40px; left: 40px; background: var(--bg-dark); color: #fff; padding: 35px; border-radius: 4px; max-width: 320px; box-shadow: 0 40px 80px rgba(0,0,0,0.4); z-index: 100; }
 
         /* --- ULTRA-MINIMALIST FOOTER (DARK BLOCK) --- */
         footer {
@@ -478,7 +336,6 @@
             letter-spacing: -1px; 
             background: linear-gradient(to bottom, #fff, #999);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -650,31 +507,22 @@
         <h2>The Specialty Menu</h2>
         <div class="menu-category-grid">
             <div class="category-column">
-                <div class="category-card" data-num="01">
-                    <h4>Brewed</h4>
-                    <span class="card-subtitle">Artisanal Roasts</span>
-                    <div class="menu-item"><div class="item-info"><h5>Manhattan Espresso</h5><p>Rich, dark, artisanal roast.</p></div><div class="item-price">$4.50</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Signature Chai</h5><p>Steeped for 24 hours with spices.</p></div><div class="item-price">$6.50</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Park Pour-over</h5><p>Single origin Ethiopian beans.</p></div><div class="item-price">$7.00</div></div>
-                </div>
+                <h4>Brewed</h4>
+                <div class="menu-item"><div class="item-info"><h5>Manhattan Espresso</h5><p>Rich, dark, artisanal roast.</p></div><div class="item-price">$4.50</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Signature Chai</h5><p>Steeped for 24 hours with spices.</p></div><div class="item-price">$6.50</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Park Pour-over</h5><p>Single origin Ethiopian beans.</p></div><div class="item-price">$7.00</div></div>
             </div>
             <div class="category-column">
-                <div class="category-card" data-num="02">
-                    <h4>Treats</h4>
-                    <span class="card-subtitle">Handcrafted Pastry</span>
-                    <div class="menu-item"><div class="item-info"><h5>Pistachio Baklava</h5><p>Traditional multi-layered pastry.</p></div><div class="item-price">$9.00</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Honey Fold</h5><p>Crispy, buttery, artisanal gold.</p></div><div class="item-price">$8.50</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Lava Bar</h5><p>70% dark Belgian cocoa.</p></div><div class="item-price">$11.00</div></div>
-                </div>
+                <h4>Treats</h4>
+                <div class="menu-item"><div class="item-info"><h5>Pistachio Baklava</h5><p>Traditional multi-layered pastry.</p></div><div class="item-price">$9.00</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Honey Fold</h5><p>Crispy, buttery, artisanal gold.</p></div><div class="item-price">$8.50</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Lava Bar</h5><p>70% dark Belgian cocoa.</p></div><div class="item-price">$11.00</div></div>
             </div>
             <div class="category-column">
-                <div class="category-card" data-num="03">
-                    <h4>Refresh</h4>
-                    <span class="card-subtitle">Chilled Perfection</span>
-                    <div class="menu-item"><div class="item-info"><h5>Park Smoothie</h5><p>Fresh berries & protein base.</p></div><div class="item-price">$9.50</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Matcha Zen</h5><p>Ceremonial grade Uji Matcha.</p></div><div class="item-price">$8.00</div></div>
-                    <div class="menu-item"><div class="item-info"><h5>Cold Brew Nitro</h5><p>Creamy, thick, velvet texture.</p></div><div class="item-price">$7.50</div></div>
-                </div>
+                <h4>Refresh</h4>
+                <div class="menu-item"><div class="item-info"><h5>Park Smoothie</h5><p>Fresh berries & protein base.</p></div><div class="item-price">$9.50</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Matcha Zen</h5><p>Ceremonial grade Uji Matcha.</p></div><div class="item-price">$8.00</div></div>
+                <div class="menu-item"><div class="item-info"><h5>Cold Brew Nitro</h5><p>Creamy, thick, velvet texture.</p></div><div class="item-price">$7.50</div></div>
             </div>
         </div>
     </section>
